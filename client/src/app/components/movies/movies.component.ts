@@ -27,13 +27,17 @@ export class MoviesComponent {
   filteredMovies : any[] = [];
   searchTerm: string = '';
 
-  constructor(private http:HttpClient){
+  constructor(private http:HttpClient, private route:Router){
     this.isLoading = true
     this.http.get<any[]>('http://localhost:5100/movies').subscribe((res) => {
       this.filteredMovies = res;
       this.movies = res
       this.isLoading = false
     })
+    // const token = localStorage.getItem('token')
+    // if(!token){
+    //   this.route.navigate(['/login'])
+    // }
   }
 
   filterMovies(): void {

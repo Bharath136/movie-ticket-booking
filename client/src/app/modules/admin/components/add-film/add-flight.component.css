@@ -14,7 +14,8 @@
 }
 
 .form-container{
-    width: 36%;
+    border: 1px solid black;
+    width: 100%;
 }
 
 @media screen and (max-width:768px) {

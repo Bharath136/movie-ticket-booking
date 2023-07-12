@@ -15,12 +15,8 @@ export class BookingsComponent {
     const userId = localStorage.getItem('userId')
     this.isLoading = true
     this.http.get<any[]>(`http://localhost:5100/bookings/user/${userId}`).subscribe((res) => {
-      this.bookings = res.sort((a, b) => {
-        const dateA = new Date(a.journeyDate);
-        const dateB = new Date(b.journeyDate);
-        return dateB.getTime() - dateA.getTime() ;
-      });
-      
+      this.bookings = res
+      console.log(res)
       this.isLoading = false
     })
   }
@@ -36,12 +32,7 @@ export class BookingsComponent {
       const userId = localStorage.getItem('userId')
       this.isLoading = true
       this.http.get<any[]>(`http://localhost:5100/bookings/user/${userId}`).subscribe((res) => {
-        this.bookings = res.sort((a, b) => {
-          const dateA = new Date(a.journeyDate);
-          const dateB = new Date(b.journeyDate);
-          return dateB.getTime() - dateA.getTime() ;
-        });
-        
+        this.bookings = res
         this.isLoading = false
       })
     })

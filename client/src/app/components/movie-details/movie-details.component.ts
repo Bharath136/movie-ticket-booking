@@ -20,7 +20,7 @@ export class MovieDetailsComponent {
   totalPrice = 0;
   seatNumbers: any[] = [];
   selectedMethod!: string;
-  paymentMethod! : string;
+  paymentMethod!: string;
   theatreId!: string
   currentModal: NgbModalRef | null = null;
   rows: any[] = [];
@@ -29,72 +29,48 @@ export class MovieDetailsComponent {
   expirationDate: string = ''
   cvv: string = ''
 
-  bookedSeats: any[] = []
+  bookedSeats: any[] = [];
+  reservedSeats: any[] = [];
   price = 0
-  
+  showTime!: string
 
-  constructor(private http: HttpClient, private router: ActivatedRoute,private route:Router,private modalService: NgbModal) {
+  constructor(private http: HttpClient, private router: ActivatedRoute, private route: Router, private modalService: NgbModal) {
     this.isLoading = true;
-    this.generateSeatRows() ;
+    this.generateSeatRows();
     this.onShowTheatres()
     const id = this.router.snapshot.paramMap.get('id'); // Use the get() method instead of using parentheses ()
     this.http.get(`http://localhost:5100/movie/${id}`).subscribe((res: any) => { // Add the type 'any' to the response
       this.movieDetails = res;
-      if(res){
+      
+      console.log(this.bookedSeats)
+      if (res) {
         this.isLoading = false
       }
     });
-  }
 
-  onShowTheatres(){
-    this.isLoading = true
-    const id = this.router.snapshot.paramMap.get('id'); 
-    this.http.get<any[]>(`http://localhost:5100/movie/${id}`).subscribe((res:any) => {
-      this.availableTheatres = res.theatre
-      this.isLoading = false
-      console.log(res.theatre)      
+    this.http.get<any>('http://localhost:5100/bookings').subscribe((res:any) => {
+      // console.log(res)
     })
   }
 
-  onBookNow(id: string) {
-    // this.theatreId = id;
-    // if (this.currentModal) {
-    //   this.currentModal.dismiss();
-    // }
-   
-   
+  onShowTheatres() {
+    this.isLoading = true
+    const id = this.router.snapshot.paramMap.get('id');
+    this.http.get<any[]>(`http://localhost:5100/movie/${id}`).subscribe((res: any) => {
+      this.availableTheatres = res.theatre
+      this.isLoading = false
+    })
   }
 
-  // confirmBooking(){
-    
-    // const movieId = this.router.snapshot.paramMap.get('id'); 
-    // const userId = localStorage.getItem('userId')
-    // const bookingDetails = {
-    //   user:userId,
-    //   movie:movieId,
-    //   theatre:this.theatreId,
-    //   totalPrice:this.totalPrice,
-    //   seatNumbers: this.seatNumbers,
-    //   paymentMethod: this.paymentMethod,
-    //   paymentStatus: 'success'
-    // }
-    // this.http.post('http://localhost:5100/',bookingDetails).subscribe((res) => {
-     
-    // })
-  // }
 
   confirmBooking() {
-    const userId = localStorage.getItem('userId')
-    const bookingDetails = {
-     
-    };
-    console.log(bookingDetails)
     const response = confirm("Are you sure you want to confirm the booking?")
     if (response) {
       this.currentModal = this.modalService.open(this.paymentModal, { size: 'lg' });
     }
   }
-  
+
+
 
   generateSeatRows() {
     const numRows = 10;
@@ -109,10 +85,9 @@ export class MovieDetailsComponent {
       }
       this.rows.push({ rowNumber, seats: rowSeats });
     }
-    console.log(this.rows)
   }
 
-  selectSeat(seatNumber: string, ) {
+  selectSeat(seatNumber: string,) {
     if (this.selectedSeats.includes(seatNumber)) {
       this.selectedSeats = this.selectedSeats.filter(seat => seat !== seatNumber);
     } else {
@@ -121,10 +96,15 @@ export class MovieDetailsComponent {
     this.totalPrice = this.price * this.selectedSeats.length
   }
 
-  openModal(id: string,price: number) {
-    console.log(price)
+  openModal(id: string, price: number, time: string) {
     this.price = price
-    console.log(id);
+    this.theatreId = id;
+    this.showTime = time;
+    this.bookedSeats = this.movieDetails.theatre.filter((theatre: { _id: string; }) => theatre._id === this.theatreId);
+    this.bookedSeats.forEach((seat) => {
+      this.reservedSeats = seat.reservedSeats;
+    });    
+
     const token = localStorage.getItem('jwtToken');
     if (token) {
       this.modalService.open(this.modalContent, { size: 'lg' });
@@ -133,13 +113,10 @@ export class MovieDetailsComponent {
     }
   }
 
-  
-  
-
   openPaymentModal() {
     this.modalService.dismissAll();
     this.modalService.open(this.paymentModal, { centered: true });
-  } 
+  }
 
   isPaymentFormValid(): boolean {
     return !!this.cardNumber && !!this.expirationDate && !!this.cvv;
@@ -147,21 +124,30 @@ export class MovieDetailsComponent {
 
   onPayment() {
     let price = this.totalPrice
-    const movieId = this.router.snapshot.paramMap.get('id'); 
+    const movieId = this.router.snapshot.paramMap.get('id');
     const userId = localStorage.getItem('userId')
     const bookingDetails = {
-      user:userId,
-      movie:movieId,
-      theatre:this.theatreId,
-      totalPrice:this.totalPrice,
-      seatNumbers: this.seatNumbers,
-      paymentMethod: this.paymentMethod,
+      user: userId,
+      movie: movieId,
+      theatre: this.theatreId,
+      totalPrice: this.totalPrice,
+      noOfTickets:this.selectedSeats.length,
+      showtime: this.showTime,
+      seatNumbers: this.selectedSeats,
+      paymentMethod: this.selectedMethod,
       paymentStatus: 'success'
     }
-    this.http.post('http://localhost:5100/',bookingDetails).subscribe((res) => {
-     
+    this.http.post('http://localhost:5100/bookings', bookingDetails).subscribe((res) => {
+      console.log(res)
     })
+
+    this.http.put(`http://localhost:5100/movies/${movieId}/reservedSeats`, { theatreId: this.theatreId, reservedSeats: this.selectedSeats }).subscribe((res) => {
+      console.log(res);
+    });
+    
+
     alert(`Payment Successful of ${price}`)
+    this.modalService.dismissAll();
   }
 
 

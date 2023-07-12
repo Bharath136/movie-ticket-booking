@@ -7,13 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  flights: any[] = []
+  theatres: any[] = []
   bookings: any[] = []
+  users: any[] = []
   isLoading = false
   constructor(private http:HttpClient){
     this.isLoading = true
     this.http.get<any[]>('http://localhost:5100/flights').subscribe((res) => {
-      this.flights = res
+      this.theatres = res
     })
 
     this.http.get<any[]>('http://localhost:5100/bookings').subscribe((res) => {

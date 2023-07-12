@@ -1,5 +1,5 @@
 <div>
-    <div *ngIf="isLoading"> 
+    <div *ngIf="isLoading" class="bg-dark" style="min-height: 100vh;"> 
         <app-loader-spinner></app-loader-spinner>
     </div>
     <div class="movies-list bg-dark text-light" *ngIf="!isLoading">
@@ -13,11 +13,11 @@
     
         <div class="row">
             <div class="col-6 col-md-2 col-sm-6" *ngFor="let movie of filteredMovies">
-                <div class="card text-light" style="cursor: pointer;background-color: rgb(21, 21, 21);" [routerLink]="'/movie/' + movie._id">
-                    <img [src]="movie.imageUrl" class="image" alt="Movie Poster">
+                <div class="w-100 mb-4" style="cursor: pointer;background-color: rgb(21, 21, 21);" [routerLink]="'/movie/' + movie._id">
+                    <img [src]="movie.imageUrl" class="image" style="width: 100%;" alt="Movie Poster">
                     <div class="movie-details p-2">
                         <h3>{{ movie.title }}</h3>
-                        <p>Genre: {{ movie.genre }}</p>
+                        <p>{{ movie.genre }}</p>
                         <p style="color: rgb(199, 199, 199);">Release Date: {{ movie.releaseDate | date }}</p>
                     </div>
                 </div>

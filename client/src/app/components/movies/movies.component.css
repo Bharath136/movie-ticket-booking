@@ -1,6 +1,6 @@
 .movies-list {
     padding: 20px;
-    height: 100vh;
+    min-height: 100vh;
     padding-top: 14vh;
 }
 
@@ -38,4 +38,9 @@ p {
 .image {
     height: 260px;
     border-radius: 4px;
+}
+@media screen and (max-width:768px) {
+    .image{
+        height: 160px;
+    }
 }

@@ -1,6 +1,8 @@
 .movie-details {
     display: flex;
+    justify-content: center;
     padding: 20px;
+    min-height: 100vh;
     padding-top: 14vh;
     width: 100%; 
     box-sizing: border-box; 
@@ -8,7 +10,7 @@
   
   .image-container {
     flex: 0 0 auto;
-    width: 50%;
+    width: 40%;
     margin-right: 20px;
   }
   
@@ -21,8 +23,10 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: end;
+    padding: 30px;
   }
+
   
   h2 {
     font-size: 24px;
@@ -43,7 +47,8 @@
     }
     .details-container{
         width: 100%;
-        padding: 20px;
+        padding: 0px;
+        padding-top: 20px;
     }
     .image-container{
         width: 100%;

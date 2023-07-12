@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { HomeComponent } from './components/home/home.component';
-import { FlightsComponent } from './components/flights/flights.component';
-import { AddFlightComponent } from './components/add-flight/add-flight.component';
+import { FlightsComponent } from './components/theatres/flights.component';
+import { AddFlightComponent } from './components/add-film/add-flight.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent,

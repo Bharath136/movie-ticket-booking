@@ -1,0 +1,49 @@
+<div class="add-flight-container">
+    <h1>Add Flight</h1>
+    <div class="add-flight">
+         <form (ngSubmit)="onSubmit()" class="form-container text-light">
+            <h1>Add Film</h1>
+            <div class="d-flex w-100" style="gap: 20px;">
+              <div class="w-50">
+                <div class="form-group">
+                  <label for="airline">Airline:</label>
+                  <input type="text" id="airline" name="airline" class="form-control" [(ngModel)]="formData.airline" placeholder="Enter airline">
+                </div>
+                <div class="form-group">
+                  <label for="flightNumber">Flight Number:</label>
+                  <input type="text" id="flightNumber" name="flightNumber" class="form-control" [(ngModel)]="formData.flightNumber" placeholder="Enter flight number">
+                </div>
+                <div class="form-group">
+                  <label for="origin">Origin:</label>
+                  <input type="text" id="origin" name="origin" class="form-control" [(ngModel)]="formData.origin" placeholder="Enter origin">
+                </div>
+                <div class="form-group">
+                  <label for="destination">Destination:</label>
+                  <input type="text" id="destination" name="destination" class="form-control" [(ngModel)]="formData.destination" placeholder="Enter destination">
+                </div>
+               
+              </div> 
+              <div  class="w-50">
+                <div class="form-group">
+                  <label for="departureTime">Departure Time:</label>
+                  <input type="datetime-local" id="departureTime" name="departureTime" class="form-control" [(ngModel)]="formData.departureTime" placeholder="Select departure time">
+                </div>
+                <div class="form-group">
+                  <label for="arrivalTime">Arrival Time:</label>
+                  <input type="datetime-local" id="arrivalTime" name="arrivalTime" class="form-control" [(ngModel)]="formData.arrivalTime" placeholder="Select arrival time">
+                </div>
+                <div class="form-group">
+                  <label for="price">Price:</label>
+                  <input type="number" id="price" name="price" class="form-control" [(ngModel)]="formData.price" placeholder="Enter price">
+                </div>
+                <div class="form-group">
+                  <label for="seatsAvailable">Seats Available:</label>
+                  <input type="number" id="seatsAvailable" name="seatsAvailable" class="form-control" [(ngModel)]="formData.seatsAvailable" placeholder="Enter seats available">
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </div>
+  </div>
+  

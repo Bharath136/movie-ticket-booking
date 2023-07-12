@@ -8,9 +8,8 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true }
 });
 
-
 const movieSchema = new mongoose.Schema({
-    imageUrl:{type:String, required: true},
+    imageUrl: { type: String, required: true },
     title: { type: String, required: true },
     genre: { type: String, required: true },
     duration: { type: Number, required: true },
@@ -21,20 +20,17 @@ const movieSchema = new mongoose.Schema({
     rating: { type: Number, required: true },
     ticketPrice: { type: Number, required: true },
     theatre: {
-      type: [{
-        name: { type: String, required: true },
-        timings: { type: String, required: true },
-        location: {type: String, required: true},
-        ticketPrice: {type: Number, required: true},
-        seatsAvailable: { type: Number, required: true },
-        reservedSeats: [{
-            seat: { type: String, required: true }
-          }],
-      }],
-      required: true
+        type: [{
+            name: { type: String, required: true },
+            timings: { type: String, required: true },
+            location: { type: String, required: true },
+            ticketPrice: { type: Number, required: true },
+            seatsAvailable: { type: Number, required: true },
+            reservedSeats: [{type: String,required: true}],
+        }],
+        required: true
     }
-  });
-  
+});
 
 const theatreSchema = new mongoose.Schema({
     theatreName: { type: String, required: true },
@@ -49,8 +45,9 @@ const bookingSchema = new mongoose.Schema({
     movie: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true },
     theatre: { type: mongoose.Schema.Types.ObjectId, ref: 'Theatre', required: true },
     totalPrice: { type: Number, required: true },
+    noOfTickets: { type: Number, required: true },
     date: { type: Date, default: Date.now },
-    showtime: { type: Date, required: true },
+    showtime: { type: String, required: true },
     seatNumbers: [{ type: String, required: true }],
     paymentMethod: { type: String, required: true },
     paymentStatus: { type: String, default: 'pending' }

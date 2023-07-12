@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="registration-container">
         <img src="https://static.vecteezy.com/system/resources/previews/003/689/228/non_2x/online-registration-or-sign-up-login-for-account-on-smartphone-app-user-interface-with-secure-password-mobile-application-for-ui-web-banner-access-cartoon-people-illustration-vector.jpg" alt="" class="image" />
-        <div class="card">
+        <div style="width: 360px;">
             <form [formGroup]="regForm" #r="ngForm" (ngSubmit)="onSubmit(r.value)" class="form">
                 <h2 class="heading text-center">Registration Form</h2>
                 <div class="form-group mb-2">
@@ -38,7 +38,7 @@
                     <label for="type">Type</label>
                     <select class="form-control" id="type" formControlName="type" required>
                       <option value="" selected disabled>Select Type</option>
-                      <option value="passenger">Passenger</option>
+                      <option value="viewer">Viewer</option>
                       <option value="admin">Admin</option>
                     </select>
                     <div *ngIf="regForm.controls['type'].touched && regForm.controls['type']?.errors">
