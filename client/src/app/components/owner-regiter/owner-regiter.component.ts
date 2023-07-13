@@ -13,7 +13,7 @@ export class OwnerRegiterComponent {
 
   constructor(private http: HttpClient, private route: Router) {
     this.regForm = new FormGroup({
-      airline: new FormControl(null, Validators.required),
+      name: new FormControl(null, Validators.required),
       email: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
     })
@@ -27,15 +27,15 @@ export class OwnerRegiterComponent {
     }
   }
 
-  onSubmit(details: {  airline: string, email: string, password: string }): void {
-    this.http.post('http://localhost:5100/airline-register', details).subscribe(
+  onSubmit(details: {  name: string, email: string, password: string }): void {
+    this.http.post('http://localhost:5100/theater-owner/register', details).subscribe(
       (response) => {
         window.alert('Airline Registered Successfully!');
-        this.route.navigate(['/airline-login']);
+        this.route.navigate(['/theater-login']);
       },
       (error) => {
         if (error.status === 400) {
-          window.alert('Airline already exists');
+          window.alert('Theater already exists');
         } else {
           window.alert('Registration Failed!');
         }

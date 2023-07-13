@@ -4,18 +4,19 @@
     </div>
     <div class="movie-details container" *ngIf="!isLoading">
         <div class="image-container">
-            <img src="{{ movieDetails.imageUrl }}" alt="Movie Poster">
+            <img src="{{ movieDetails.image_url }}" alt="Movie Poster">
         </div>
         <div class="details-container text-light">
             <h1>{{ movieDetails.title }}</h1>
-            <p>Genre: {{ movieDetails.genre }}</p>
-            <p>Duration: {{ movieDetails.duration }} minutes</p>
-            <p>Release Date: {{ movieDetails.releaseDate | date }}</p>
-            <p>Director: {{ movieDetails.director }}</p>
-            <p>Cast: {{ movieDetails.cast}}</p>
+            <p><strong style="font-size: 18px;">Genre:</strong> {{ movieDetails.genre }}</p>
+            <p><strong style="font-size: 18px;">Duration:</strong> {{ movieDetails.duration }} minutes</p>
+            <p><strong style="font-size: 18px;">Release Date:</strong> {{ movieDetails.release_date | date }}</p>            
+            <p><strong style="font-size: 18px;">Ticket Price:</strong> 100 /Rs</p> 
+            <p><strong style="font-size: 18px;">Description:</strong> {{ movieDetails.description }}</p>
+            <!-- <p>Cast: {{ movieDetails.cast}}</p>
             <p>Language: {{ movieDetails.language }}</p>
-            <p>Rating: {{ movieDetails.rating }}</p>
-            <p>Ticket Price: ${{ movieDetails.ticketPrice }}</p>
+            <p>Rating: {{ movieDetails.rating }}</p> -->
+            
             <div class="d-flex">
                 <button class="btn btn-primary mr-2" style="padding: 10px 30px;" (click)="onShowTheatres()">Show
                     Theatres</button>
@@ -29,12 +30,13 @@
         <div class="row">
             <div class="col-12 col-md-3 col-sm-6" *ngFor="let theatre of availableTheatres">
                 <div class="card text-light p-4 d-flex flex-column justify-content-between mb-4"
-                    style="height: 240px; background-color: rgb(26, 26, 26);">
+                    style="height: 400px; background-color: rgb(26, 26, 26);">
+                    <img [src]="theatre.image_url" class="mb-2" alt="Theater" style="height: 160px; border-radius: 10px;">
                     <h5 class="text-secondary"><strong class="text-light">Theatre: </strong> {{theatre.name}}</h5>
-                    <p class="text-secondary"><strong class="text-light">Timings: </strong> {{theatre.timings}}</p>
-                    <p class="text-secondary"><strong class="text-light">Location: </strong> {{theatre.location}}</p>
-                    <p class="text-secondary"><strong class="text-light">Total Seats: </strong> {{theatre.seatsAvailable}}</p>
-                    <button class="btn btn-primary w-100" (click)="openModal(theatre._id,movieDetails.ticketPrice,theatre.timings)">Book
+                    <p class="text-secondary"><strong class="text-light">City: </strong> {{theatre.city}}</p>
+                    <p class="text-secondary"><strong class="text-light">State: </strong> {{theatre.state}}</p>
+                    <p class="text-secondary"><strong class="text-light">Total Seats: </strong> {{theatre.capacity}}</p>
+                    <button class="btn btn-primary w-100" (click)="openModal(theatre._id)">Book
                         Now</button>
                 </div>
             </div>

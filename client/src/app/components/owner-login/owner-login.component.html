@@ -3,13 +3,13 @@
         <img src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?w=2000" alt="" class="image" />
         <div class="card">
             <form [formGroup]="regForm" #r="ngForm" (ngSubmit)="onSubmit(r.value)" class="form">
-                <h2 class="heading text-center">Airline Login Form</h2>
+                <h2 class="heading text-center">Theater Login</h2>
                 <div class="form-group mb-2">
-                    <label for="airline">Airline</label>
-                    <input placeholder="Enter airline" type="text" class="form-control" id="airline" formControlName="airline" required>
-                    <div *ngIf="regForm.controls['airline'].touched && regForm.controls['airline']?.['errors']">
-                        <div *ngIf="regForm.controls['airline']?.['errors']?.['required']" class="error-message text-danger">
-                            Airline is required
+                    <label for="email">Email</label>
+                    <input placeholder="Enter email" type="text" class="form-control" id="email" formControlName="email" required>
+                    <div *ngIf="regForm.controls['email'].touched && regForm.controls['email']?.['errors']">
+                        <div *ngIf="regForm.controls['email']?.['errors']?.['required']" class="error-message text-danger">
+                            Theater email is required
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 w-100" [disabled]="regForm.invalid">Sign In</button>
-                <div class="mt-2"><a routerLink="/airline-register" class="mt-2">Don't have an account? click here</a></div>
+                <div class="mt-2"><a routerLink="/theater-register" class="mt-2">Don't have an account? click here</a></div>
             </form>
         </div>
     </div>

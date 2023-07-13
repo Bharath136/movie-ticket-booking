@@ -9,12 +9,35 @@ import { Component } from '@angular/core';
 export class BookingsComponent {
   isLoading = false
   bookings: any[] = []
-  constructor(private http:HttpClient){
+  today = new Date();
+
+  constructor(private http: HttpClient) {
+    const userId = localStorage.getItem('userId')
+    const theaterName = localStorage.getItem('theater')
     this.isLoading = true
-    const airline = localStorage.getItem('airline')
-    this.http.get<any[]>('http://localhost:5100/bookings').subscribe((res) => {
-      this.bookings = res.filter(booking => booking.flight.airline === airline)
-      this.isLoading = false
+    this.http.get<any[]>(`http://localhost:5100/bookings`).subscribe((res) => {
+      this.bookings = res.filter((booking: { theater_id: { name: string } }) => booking.theater_id.name === theaterName);
+      console.log(res);
+      this.isLoading = false;
+    });
+
+  }
+
+  isDateBeforeToday(journeyDate: string): boolean {
+    const today = new Date();
+    const journey = new Date(journeyDate);
+    return journey < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  }
+
+  onCancleTicket(id: string) {
+    this.http.delete(`http://localhost:5100/bookings/${id}`).subscribe((res) => {
+      const userId = localStorage.getItem('userId')
+      this.isLoading = true
+      // this.http.get<any[]>(`http://localhost:5100/bookings/theaters`).subscribe((res) => {
+      //   this.bookings = res
+      //   this.isLoading = false
+      // })
     })
   }
+
 }

@@ -13,7 +13,7 @@ export class OwnerLoginComponent {
 
   constructor(private http: HttpClient, private route: Router) {
     this.regForm = new FormGroup({
-      airline : new FormControl(null, Validators.required),
+      email : new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
     })
     const agentToken = localStorage.getItem("ownerToken")
@@ -26,20 +26,20 @@ export class OwnerLoginComponent {
   ngOnInit(): void {
     const agentToken = localStorage.getItem("ownerToken")
     if (agentToken) {
-      this.route.navigate(['/owner/flights'])
+      this.route.navigate(['/owner/theaters'])
     }
   }
 
-  onSubmit(details = { airline: String, password: String }): void {
-    this.http.post('http://localhost:5100/airline-login', details).subscribe(
+  onSubmit(details = { email: String, password: String }): void {
+    this.http.post('http://localhost:5100/theater-owner/login', details).subscribe(
       (response: any) => {
         console.log(response)
-        if (response && response.airlineOwner.airline) {
-          localStorage.setItem('airline', response.airlineOwner.airline)
+        if (response && response.owner.name) {
+          localStorage.setItem('theater', response.owner.name)
         }
         if (response && response.ownerToken          ) {
           window.alert('Airline Login Successfully!');
-          this.route.navigate(['/owner/flights']);
+          this.route.navigate(['/owner/theaters']);
           localStorage.setItem('ownerToken', response.ownerToken          );
         }
       },

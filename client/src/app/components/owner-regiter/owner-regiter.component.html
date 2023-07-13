@@ -3,14 +3,14 @@
         <img src="https://static.vecteezy.com/system/resources/previews/003/689/228/non_2x/online-registration-or-sign-up-login-for-account-on-smartphone-app-user-interface-with-secure-password-mobile-application-for-ui-web-banner-access-cartoon-people-illustration-vector.jpg" alt="" class="image" />
         <div class="card">
             <form [formGroup]="regForm" #r="ngForm" (ngSubmit)="onSubmit(r.value)" class="form">
-                <h2 class="heading text-center">Airline Registration Form</h2>
+                <h2 class="heading text-center">Theater Registration</h2>
                 <div class="form-group mb-2">
-                    <label for="airline">Airline</label>
-                    <input placeholder="Enter airline" type="text" class="form-control" id="airline" formControlName="airline" required>
-                    <div *ngIf="regForm.controls['airline'].touched && regForm.controls['airline']?.['errors']">
+                    <label for="name">Theater</label>
+                    <input placeholder="Enter name" type="text" class="form-control" id="name" formControlName="name" required>
+                    <div *ngIf="regForm.controls['name'].touched && regForm.controls['name']?.['errors']">
                         <div *ngIf="regForm.controls['airline']?.['errors']?.['required']"
                             class="error-message text-danger">
-                            Airline is required
+                            Theater name is required
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 w-100" [disabled]="regForm.invalid" >Sign Up</button>
-                <div class="mt-2"><a routerLink="/airline-login" class="mt-2">Already have an account? click here</a></div>
+                <div class="mt-2"><a routerLink="/theater-login" class="mt-2">Already have an account? click here</a></div>
             </form>
         </div>
     </div>

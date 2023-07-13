@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { HomeComponent } from './components/home/home.component';
-import { FlightsComponent } from './components/theatres/flights.component';
-import { AddFlightComponent } from './components/add-film/add-flight.component';
+import { AddFilmComponent } from './components/add-film/add-film.component';
+import { UsersComponent } from './components/users/users.component';
+import { TheatersComponent } from './components/theaters/theaters.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent,
@@ -18,12 +19,16 @@ const routes: Routes = [
         component:BookingsComponent
       },
       {
-        path:'flights',
-        component:FlightsComponent
+        path:'theaters',
+        component:TheatersComponent
       },
       {
-        path:'add-flight',
-        component:AddFlightComponent
+        path:'add-film-or-theater',
+        component:AddFilmComponent
+      },
+      {
+        path:'users',
+        component:UsersComponent
       },
       {
         path: '', redirectTo: '/admin/dashboard', pathMatch: 'full'

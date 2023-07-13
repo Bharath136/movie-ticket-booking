@@ -14,11 +14,11 @@
         <div class="row">
             <div class="col-6 col-md-2 col-sm-6" *ngFor="let movie of filteredMovies">
                 <div class="w-100 mb-4" style="cursor: pointer;background-color: rgb(21, 21, 21);" [routerLink]="'/movie/' + movie._id">
-                    <img [src]="movie.imageUrl" class="image" style="width: 100%;" alt="Movie Poster">
+                    <img [src]="movie.image_url" class="image" style="width: 100%;" alt="Movie Poster">
                     <div class="movie-details p-2">
                         <h3>{{ movie.title }}</h3>
                         <p>{{ movie.genre }}</p>
-                        <p style="color: rgb(199, 199, 199);">Release Date: {{ movie.releaseDate | date }}</p>
+                        <p style="color: rgb(199, 199, 199);">Release Date: {{ movie.release_date | date }}</p>
                     </div>
                 </div>
             </div>

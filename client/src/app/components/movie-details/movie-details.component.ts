@@ -36,19 +36,18 @@ export class MovieDetailsComponent {
 
   constructor(private http: HttpClient, private router: ActivatedRoute, private route: Router, private modalService: NgbModal) {
     this.isLoading = true;
+
     this.generateSeatRows();
-    this.onShowTheatres()
     const id = this.router.snapshot.paramMap.get('id'); // Use the get() method instead of using parentheses ()
     this.http.get(`http://localhost:5100/movie/${id}`).subscribe((res: any) => { // Add the type 'any' to the response
       this.movieDetails = res;
-      
-      console.log(this.bookedSeats)
       if (res) {
         this.isLoading = false
       }
     });
 
-    this.http.get<any>('http://localhost:5100/bookings').subscribe((res:any) => {
+    const movieId = this.router.snapshot.paramMap.get('id');
+    this.http.get<any>(`http://localhost:5100/bookings/movie/${movieId}`).subscribe((res) => {
       // console.log(res)
     })
   }
@@ -56,12 +55,11 @@ export class MovieDetailsComponent {
   onShowTheatres() {
     this.isLoading = true
     const id = this.router.snapshot.paramMap.get('id');
-    this.http.get<any[]>(`http://localhost:5100/movie/${id}`).subscribe((res: any) => {
-      this.availableTheatres = res.theatre
+    this.http.get<any[]>(`http://localhost:5100/theaters`).subscribe((res: any) => {
+      this.availableTheatres = res
       this.isLoading = false
     })
   }
-
 
   confirmBooking() {
     const response = confirm("Are you sure you want to confirm the booking?")
@@ -69,8 +67,6 @@ export class MovieDetailsComponent {
       this.currentModal = this.modalService.open(this.paymentModal, { size: 'lg' });
     }
   }
-
-
 
   generateSeatRows() {
     const numRows = 10;
@@ -96,18 +92,25 @@ export class MovieDetailsComponent {
     this.totalPrice = this.price * this.selectedSeats.length
   }
 
-  openModal(id: string, price: number, time: string) {
-    this.price = price
+  openModal(id: string) {
+    this.price = 100
     this.theatreId = id;
-    this.showTime = time;
-    this.bookedSeats = this.movieDetails.theatre.filter((theatre: { _id: string; }) => theatre._id === this.theatreId);
-    this.bookedSeats.forEach((seat) => {
-      this.reservedSeats = seat.reservedSeats;
-    });    
-
+    const movieId = this.router.snapshot.paramMap.get('id');
     const token = localStorage.getItem('jwtToken');
     if (token) {
-      this.modalService.open(this.modalContent, { size: 'lg' });
+      this.http.get<any[]>(`http://localhost:5100/bookings/movie/${movieId}`).subscribe(
+        (res) => {
+          this.reservedSeats = res.filter((booking) => booking.theater_id._id === id)
+            .map((booking) => booking.seat_numbers)
+            .flat();
+          this.modalService.open(this.modalContent, { size: 'lg' });
+        },
+        (error) => {
+          console.error('Failed to retrieve movie bookings:', error);
+        }
+      );
+
+
     } else {
       this.route.navigate(['/login']);
     }
@@ -127,28 +130,19 @@ export class MovieDetailsComponent {
     const movieId = this.router.snapshot.paramMap.get('id');
     const userId = localStorage.getItem('userId')
     const bookingDetails = {
-      user: userId,
-      movie: movieId,
-      theatre: this.theatreId,
-      totalPrice: this.totalPrice,
-      noOfTickets:this.selectedSeats.length,
-      showtime: this.showTime,
-      seatNumbers: this.selectedSeats,
-      paymentMethod: this.selectedMethod,
-      paymentStatus: 'success'
+      user_id: userId,
+      movie_id: movieId,
+      theater_id: this.theatreId,
+      total_price: this.totalPrice,
+      seat_numbers: this.selectedSeats,
+      payment_method: this.selectedMethod,
+      payment_status: 'success'
     }
     this.http.post('http://localhost:5100/bookings', bookingDetails).subscribe((res) => {
       console.log(res)
     })
 
-    this.http.put(`http://localhost:5100/movies/${movieId}/reservedSeats`, { theatreId: this.theatreId, reservedSeats: this.selectedSeats }).subscribe((res) => {
-      console.log(res);
-    });
-    
-
     alert(`Payment Successful of ${price}`)
     this.modalService.dismissAll();
   }
-
-
 }

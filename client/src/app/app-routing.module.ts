@@ -12,12 +12,12 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'airline-login', component: OwnerLoginComponent },
+  { path: 'theater-login', component: OwnerLoginComponent },
   { path: 'bookings', component: BookingsComponent },
   { path: 'movies', component: MoviesComponent },
   { path: 'movie/:id', component: MovieDetailsComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'airline-register', component: OwnerRegiterComponent },
+  { path: 'theater-register', component: OwnerRegiterComponent },
   {
     path: 'admin',
     loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule)

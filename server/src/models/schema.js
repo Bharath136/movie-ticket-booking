@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Define User schema
 const userSchema = new mongoose.Schema({
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
@@ -8,54 +9,50 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true }
 });
 
+const theaterOwnerSchema = new mongoose.Schema({
+    name:{ type: String, required: true},
+    email: {type: String, required: true},
+    password: {type: String, required: true}
+})
+
+// Define Movie schema
 const movieSchema = new mongoose.Schema({
-    imageUrl: { type: String, required: true },
     title: { type: String, required: true },
+    image_url: { type: String, required: true },
+    description: { type: String, required: true },
     genre: { type: String, required: true },
     duration: { type: Number, required: true },
-    releaseDate: { type: Date, required: true },
-    director: { type: String, required: true },
-    cast: [String],
-    language: { type: String, required: true },
-    rating: { type: Number, required: true },
-    ticketPrice: { type: Number, required: true },
-    theatre: {
-        type: [{
-            name: { type: String, required: true },
-            timings: { type: String, required: true },
-            location: { type: String, required: true },
-            ticketPrice: { type: Number, required: true },
-            seatsAvailable: { type: Number, required: true },
-            reservedSeats: [{type: String,required: true}],
-        }],
-        required: true
-    }
+    release_date: { type: Date, required: true }
 });
 
-const theatreSchema = new mongoose.Schema({
-    theatreName: { type: String, required: true },
-    location: { type: String, required: true },
-    capacity: { type: Number, required: true },
-    password: { type: String, required: true },
-    movies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
+// Define Theater schema
+const theaterSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    image_url: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    capacity: { type: Number, required: true }
 });
 
+// Define Booking schema
 const bookingSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    movie: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true },
-    theatre: { type: mongoose.Schema.Types.ObjectId, ref: 'Theatre', required: true },
-    totalPrice: { type: Number, required: true },
-    noOfTickets: { type: Number, required: true },
-    date: { type: Date, default: Date.now },
-    showtime: { type: String, required: true },
-    seatNumbers: [{ type: String, required: true }],
-    paymentMethod: { type: String, required: true },
-    paymentStatus: { type: String, default: 'pending' }
+    user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    movie_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true },
+    theater_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Theater', required: true },
+    total_price: { type: Number, required: true },
+    seat_numbers: [{ type: String, required: true }],
+    booking_date: { type: Date, default: Date.now },
+    payment_method: { type: String, required: true },
+    payment_status: { type: String, default: 'pending' }
 });
 
-const Users = mongoose.model('User', userSchema);
+// Create and export the corresponding models
+const Users = mongoose.model('Users', userSchema);
+const TheaterOwner = mongoose.model('TheaterOwner', theaterOwnerSchema);
 const Movie = mongoose.model('Movie', movieSchema);
-const Theatre = mongoose.model('Theatre', theatreSchema);
+const Theater = mongoose.model('Theater', theaterSchema);
+const Screen = mongoose.model('Screen', screenSchema);
+const Showtime = mongoose.model('Showtime', showtimeSchema);
 const Booking = mongoose.model('Booking', bookingSchema);
 
-module.exports = { Users, Movie, Theatre, Booking };
+module.exports = { Users, Movie, Theater, Booking, TheaterOwner };

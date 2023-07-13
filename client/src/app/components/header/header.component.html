@@ -40,7 +40,7 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="adminToken">
-    <a class="navbar-brand" routerLink="/">Fly-High</a>
+    <a class="navbar-brand" routerLink="/admin/dashboard">Fly-High</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -52,13 +52,13 @@
                 <a class="nav-link" routerLink="/admin/dashboard">Dashboard <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link" routerLink="/admin/flights">Theatres</a>
+                <a class="nav-link" routerLink="/admin/theaters">Theater</a>
             </li>
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="/admin/bookings">Bookings</a>
             </li>
             <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link" routerLink="/admin/add-flight">AddFilm</a>
+                <a class="nav-link" routerLink="/admin/add-film-or-theater">AddFilmOrTheater</a>
             </li>
             <li class="nav-item dropdown" routerLinkActive="active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -79,7 +79,7 @@
 
 <!-- Admin -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="ownerToken">
-    <a class="navbar-brand" routerLink="/">Fly-High</a>
+    <a class="navbar-brand" routerLink="/owner/theaters">Fly-High</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -88,7 +88,7 @@
     <div class="collapse navbar-collapse bg-dark" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link" routerLink="/owner/flights">Theatres</a>
+                <a class="nav-link" routerLink="/owner/theaters">Theater</a>
             </li>
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="/owner/bookings">Bookings</a>

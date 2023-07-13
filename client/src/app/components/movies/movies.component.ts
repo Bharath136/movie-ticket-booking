@@ -34,10 +34,10 @@ export class MoviesComponent {
       this.movies = res
       this.isLoading = false
     })
-    // const token = localStorage.getItem('token')
-    // if(!token){
-    //   this.route.navigate(['/login'])
-    // }
+    const token = localStorage.getItem('jwtToken')
+    if(!token){
+      this.route.navigate(['/login'])
+    }
   }
 
   filterMovies(): void {
